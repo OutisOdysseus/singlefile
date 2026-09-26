@@ -101,6 +101,17 @@ are from the Player's Handbook, you will find it in the
 If you are developing locally and would like to generate your own, follow the
 above steps and then run `npm run phb`.
 
+### Standalone Single-File Offline Build
+If you want to use The Homebrewery completely offline without running MongoDB or a local server, you can use the single-file standalone build:
+- Open [`homebrewery.html`](./homebrewery.html) (or `index.html`) directly in any web browser (`file://` protocol).
+- All fonts, icons, styling, themes (5e PHB, 5e DMG, Blank, Journal, Unearthed Arcana, Legacy), and markdown scripts are inlined.
+- Brews are saved to your browser's local storage and can be imported/exported as Markdown, JSON, or printed to PDF.
+
+To regenerate the standalone single-file build:
+```bash
+npm run singlefile
+```
+
 ## Issues, Suggestions, and Bugs
 If you run into any issues using The Homebrewery or have suggestions for
 improvement, please submit an issue [on GitHub][repo-issues-url].

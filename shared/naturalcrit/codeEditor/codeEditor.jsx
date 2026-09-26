@@ -454,8 +454,12 @@ const CodeEditor = createClass({
 	//----------------------//
 
 	render : function(){
+		const isStandalone = typeof document !== 'undefined' && (
+			Boolean(document.getElementById('hb-codemirror-themes')) ||
+			window.location?.protocol === 'file:'
+		);
 		return <>
-			<link href={`../homebrew/cm-themes/${this.props.editorTheme}.css`} type='text/css' rel='stylesheet' />
+			{!isStandalone && <link href={`../homebrew/cm-themes/${this.props.editorTheme}.css`} type='text/css' rel='stylesheet' />}
 			<div className='codeEditor' ref={this.editor} style={this.props.style}/>
 		</>;
 	}

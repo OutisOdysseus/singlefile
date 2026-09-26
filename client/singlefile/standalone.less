@@ -1,0 +1,420 @@
+@import (less) '../homebrew/homebrew.less';
+@import (less) '../homebrew/navbar/navbar.less';
+
+.standaloneApp {
+	display        : flex;
+	flex-direction : column;
+	width          : 100vw;
+	height         : 100vh;
+	overflow       : hidden;
+	position       : relative;
+	background-color: #1a1a1a;
+	color          : #eee;
+	font-family    : 'Open Sans', sans-serif;
+
+	.standaloneNav {
+		display         : flex;
+		justify-content : space-between;
+		align-items     : center;
+		background-color: #2c2f33;
+		color           : #fff;
+		height          : 45px;
+		padding         : 0 15px;
+		box-shadow      : 0 2px 6px rgba(0,0,0,0.4);
+		z-index         : 100;
+		flex-shrink     : 0;
+
+		.navGroup {
+			display     : flex;
+			align-items : center;
+			gap         : 10px;
+		}
+
+		.brandTitle {
+			display     : flex;
+			align-items : center;
+			gap         : 8px;
+			font-weight : 600;
+			font-size   : 16px;
+			color       : #fff;
+			cursor      : pointer;
+
+			.logoIcon {
+				color : #c41e3a;
+				font-size: 18px;
+			}
+
+			.badgeOffline {
+				font-size       : 10px;
+				text-transform  : uppercase;
+				background-color: #43b581;
+				color           : #fff;
+				padding         : 2px 6px;
+				border-radius   : 4px;
+				font-weight     : bold;
+				letter-spacing  : 0.5px;
+			}
+		}
+
+		.brewTitleInput {
+			background   : #202225;
+			border       : 1px solid #40444b;
+			color        : #fff;
+			padding      : 4px 10px;
+			border-radius: 4px;
+			font-size    : 14px;
+			font-weight  : 500;
+			min-width    : 200px;
+			max-width    : 320px;
+			transition   : border-color 0.2s;
+
+			&:focus {
+				outline      : none;
+				border-color : #7289da;
+			}
+		}
+
+		.navButton {
+			display         : inline-flex;
+			align-items     : center;
+			gap             : 6px;
+			background      : #36393f;
+			color           : #dcddde;
+			border          : 1px solid #484b51;
+			border-radius   : 4px;
+			padding         : 5px 10px;
+			font-size       : 13px;
+			cursor          : pointer;
+			text-decoration : none;
+			transition      : all 0.15s ease-in-out;
+			user-select     : none;
+
+			&:hover {
+				background-color: #40444b;
+				color           : #fff;
+				border-color    : #5c6067;
+			}
+
+			&.active, &:active {
+				background-color: #5865f2;
+				border-color    : #5865f2;
+				color           : #fff;
+			}
+
+			&.primary {
+				background-color: #5865f2;
+				border-color    : #5865f2;
+				color           : #fff;
+
+				&:hover {
+					background-color: #4752c4;
+				}
+			}
+
+			&.saveStatus {
+				cursor     : default;
+				font-size  : 12px;
+				padding    : 4px 8px;
+				background : transparent;
+				border     : none;
+				color      : #b9bbbe;
+
+				&.saved {
+					color : #43b581;
+				}
+
+				&.saving {
+					color : #faa61a;
+				}
+
+				&.unsaved {
+					color : #f04747;
+				}
+			}
+		}
+
+		.navSelect {
+			background   : #36393f;
+			color        : #dcddde;
+			border       : 1px solid #484b51;
+			border-radius: 4px;
+			padding      : 4px 8px;
+			font-size    : 13px;
+			cursor       : pointer;
+			outline      : none;
+
+			&:focus {
+				border-color : #7289da;
+			}
+		}
+	}
+
+	.mainContentArea {
+		flex       : 1;
+		display    : flex;
+		overflow   : hidden;
+		position   : relative;
+	}
+
+	.splitPaneWrapper {
+		width    : 100%;
+		height   : 100%;
+		display  : flex;
+		position : relative;
+	}
+}
+
+/* Modal Overlay Styles */
+.standaloneModalOverlay {
+	position        : fixed;
+	top             : 0;
+	left            : 0;
+	right           : 0;
+	bottom          : 0;
+	background-color: rgba(0, 0, 0, 0.7);
+	display         : flex;
+	justify-content : center;
+	align-items     : center;
+	z-index         : 1000;
+	padding         : 20px;
+
+	.standaloneModal {
+		background-color: #2f3136;
+		border          : 1px solid #40444b;
+		border-radius   : 8px;
+		width           : 100%;
+		max-width       : 720px;
+		max-height      : 85vh;
+		display         : flex;
+		flex-direction  : column;
+		box-shadow      : 0 10px 30px rgba(0,0,0,0.6);
+		color           : #dcddde;
+		overflow        : hidden;
+
+		.modalHeader {
+			display         : flex;
+			justify-content : space-between;
+			align-items     : center;
+			padding         : 16px 20px;
+			border-bottom   : 1px solid #3e4147;
+
+			h2 {
+				margin      : 0;
+				font-size   : 18px;
+				color       : #fff;
+				font-weight : 600;
+				display     : flex;
+				align-items : center;
+				gap         : 8px;
+			}
+
+			.closeBtn {
+				background : none;
+				border     : none;
+				color      : #b9bbbe;
+				font-size  : 20px;
+				cursor     : pointer;
+				padding    : 0;
+
+				&:hover {
+					color : #fff;
+				}
+			}
+		}
+
+		.modalBody {
+			padding    : 20px;
+			overflow-y : auto;
+			flex       : 1;
+
+			p {
+				line-height : 1.5;
+				margin-bottom: 15px;
+			}
+
+			h3 {
+				color       : #fff;
+				margin-top  : 15px;
+				margin-bottom: 8px;
+				font-size   : 15px;
+			}
+
+			ul {
+				padding-left : 20px;
+				margin-bottom: 15px;
+
+				li {
+					margin-bottom : 6px;
+				}
+			}
+
+			code {
+				background   : #202225;
+				padding      : 2px 5px;
+				border-radius: 3px;
+				font-family  : monospace;
+				color        : #f8db94;
+			}
+
+			.vaultControls {
+				display         : flex;
+				justify-content : space-between;
+				align-items     : center;
+				margin-bottom   : 15px;
+				gap             : 10px;
+				flex-wrap       : wrap;
+
+				.actionBtn {
+					background-color: #5865f2;
+					color           : #fff;
+					border          : none;
+					padding         : 8px 14px;
+					border-radius   : 4px;
+					font-size       : 13px;
+					cursor          : pointer;
+					display         : inline-flex;
+					align-items     : center;
+					gap             : 6px;
+
+					&:hover {
+						background-color: #4752c4;
+					}
+
+					&.secondary {
+						background-color: #4f545c;
+
+						&:hover {
+							background-color: #5d6269;
+						}
+					}
+				}
+			}
+
+			.brewTable {
+				width           : 100%;
+				border-collapse : collapse;
+				background-color: #202225;
+				border-radius   : 6px;
+				overflow        : hidden;
+
+				th, td {
+					padding    : 10px 12px;
+					text-align : left;
+					border-bottom: 1px solid #2f3136;
+				}
+
+				th {
+					background-color: #292b2f;
+					color           : #8e9297;
+					font-size       : 12px;
+					text-transform  : uppercase;
+					letter-spacing  : 0.5px;
+				}
+
+				tr {
+					&:hover {
+						background-color: #282a2e;
+					}
+
+					&.activeBrewRow {
+						background-color: rgba(88, 101, 242, 0.15);
+
+						td.titleCol {
+							color       : #7289da;
+							font-weight : bold;
+						}
+					}
+				}
+
+				.actionButtons {
+					display : flex;
+					gap     : 6px;
+
+					button {
+						background    : #36393f;
+						border        : 1px solid #484b51;
+						color         : #dcddde;
+						border-radius : 3px;
+						padding       : 4px 8px;
+						font-size     : 12px;
+						cursor        : pointer;
+
+						&:hover {
+							background-color: #4f545c;
+							color           : #fff;
+						}
+
+						&.deleteBtn:hover {
+							background-color: #ed4245;
+							border-color    : #ed4245;
+						}
+					}
+				}
+			}
+		}
+
+		.modalFooter {
+			padding         : 12px 20px;
+			background-color: #292b2f;
+			border-top      : 1px solid #3e4147;
+			display         : flex;
+			justify-content : flex-end;
+			gap             : 10px;
+
+			button {
+				padding       : 6px 14px;
+				border-radius : 4px;
+				font-size     : 13px;
+				cursor        : pointer;
+				border        : none;
+
+				&.closeFooterBtn {
+					background-color: #4f545c;
+					color           : #fff;
+
+					&:hover {
+						background-color: #5d6269;
+					}
+				}
+			}
+		}
+	}
+}
+
+/* Toast Notifications */
+.standaloneToast {
+	position        : fixed;
+	bottom          : 24px;
+	right           : 24px;
+	background-color: #202225;
+	color           : #fff;
+	border-left     : 4px solid #43b581;
+	padding         : 12px 18px;
+	border-radius   : 4px;
+	box-shadow      : 0 4px 12px rgba(0,0,0,0.5);
+	z-index         : 2000;
+	font-size       : 14px;
+	display         : flex;
+	align-items     : center;
+	gap             : 10px;
+	animation       : toastFadeIn 0.25s ease-out;
+
+	&.error {
+		border-left-color: #ed4245;
+	}
+
+	&.info {
+		border-left-color: #5865f2;
+	}
+}
+
+@keyframes toastFadeIn {
+	from {
+		opacity   : 0;
+		transform : translateY(10px);
+	}
+	to {
+		opacity   : 1;
+		transform : translateY(0);
+	}
+}

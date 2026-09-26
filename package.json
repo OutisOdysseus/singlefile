@@ -42,6 +42,7 @@
     "test:route": "jest tests/routes/static-pages.test.js --verbose",
     "test:safehtml": "jest tests/html/safeHTML.test.js --verbose",
     "phb": "node --experimental-require-module scripts/phb.js",
+    "singlefile": "node --experimental-require-module scripts/buildSingleFile.js",
     "prod": "set NODE_ENV=production && npm run build",
     "postinstall": "npm run build",
     "start": "node --experimental-require-module server.js"
