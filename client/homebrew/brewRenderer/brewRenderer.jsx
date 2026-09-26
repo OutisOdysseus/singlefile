@@ -26,7 +26,7 @@ const PAGE_HEIGHT = 1056;
 
 const INITIAL_CONTENT = dedent`
 	<!DOCTYPE html><html><head>
-	<link href="//fonts.googleapis.com/css?family=Open+Sans:400,300,600,700" rel="stylesheet" type="text/css" />
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700" rel="stylesheet" type="text/css" />
 	<link href='/homebrew/bundle.css' type="text/css" rel='stylesheet' />
 	<base target=_blank>
 	</head><body style='overflow: hidden'><div></div></body></html>`;
@@ -44,6 +44,11 @@ const BrewPage = (props)=>{
 
 	useEffect(()=>{
 		if(!pageRef.current) return;
+
+		if(typeof IntersectionObserver === 'undefined') {
+			props.onVisibilityChange(props.index + 1, true, props.index === 0);
+			return;
+		}
 
 		// Observer for tracking pages within the `.pages` div
 		const visibleObserver = new IntersectionObserver(
@@ -295,7 +300,7 @@ const BrewRenderer = (props)=>{
 
 	const styleObject = {};
 
-	if(global.config.deployment) {
+	if(global.config?.deployment) {
 		styleObject.backgroundImage = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='40px' width='200px'><text x='0' y='15' fill='%23fff7' font-size='20'>${global.config.deployment}</text></svg>")`;
 	}
 
@@ -327,7 +332,7 @@ const BrewRenderer = (props)=>{
 				contentDidMount={frameDidMount}
 				onClick={()=>{emitClick();}}
 			>
-				<div className={`brewRenderer ${global.config.deployment && 'deployment'}`}
+				<div className={`brewRenderer ${global.config?.deployment && 'deployment'}`}
 					onKeyDown={handleControlKeys}
 					tabIndex={-1}
 					style={ styleObject }

@@ -6,16 +6,30 @@ function Dialog({ dismisskeys = [], closeText = 'Close', blocking = false, ...re
 	const dialogRef = useRef(null);
 
 	useEffect(()=>{
-		blocking ? dialogRef.current?.showModal() : dialogRef.current?.show();
+		if (blocking) {
+			if (typeof dialogRef.current?.showModal === 'function') {
+				dialogRef.current.showModal();
+			} else if (typeof dialogRef.current?.show === 'function') {
+				dialogRef.current.show();
+			}
+		} else {
+			if (typeof dialogRef.current?.show === 'function') {
+				dialogRef.current.show();
+			}
+		}
 	}, []);
 
 	const dismiss = ()=>{
 		dismisskeys.forEach((key)=>{
 			if(key) {
-				localStorage.setItem(key, 'true');
+				try {
+					localStorage.setItem(key, 'true');
+				} catch (e) {}
 			}
 		});
-		dialogRef.current?.close();
+		if (typeof dialogRef.current?.close === 'function') {
+			dialogRef.current.close();
+		}
 	};
 
 	return (
